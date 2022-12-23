@@ -10,7 +10,8 @@ import Dashboard from './pages/Dashboard';
 import DashboardSegment from './pages/DashboardSegment';
 import About from './pages/About';
 import Post from './pages/Post';
-import { render } from '@testing-library/react';
+import PostSegment from './pages/PostSegment';
+import Account from './pages/Account';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const AtomsDevtools = ({ children }: any) => {
@@ -25,7 +26,10 @@ const router = createBrowserRouter(
         <Route path=":id" element={<DashboardSegment />}></Route>
       </Route>
       <Route path="about" element={<About />}></Route>
-      <Route path="post" element={<Post />}></Route>
+      <Route path="post" element={<Post />}>
+        <Route path=":id" element={<PostSegment />}></Route>
+      </Route>
+      <Route path="account" element={<Account />}></Route>
     </Route>
   )
 );
