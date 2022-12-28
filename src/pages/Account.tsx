@@ -10,7 +10,16 @@ const FirstChildComponent = () => {
   const posts = useAtomValue(postsAtom);
   const count = useAtomValue(countAtom);
   console.log('posts', posts);
-  return <div>first child component: {count}</div>;
+  return (
+    <>
+      <div>first child component: {count}</div>
+      <ul>
+        <Suspense fallback={<>...loading</>}>
+          <li>{posts.title}</li>
+        </Suspense>
+      </ul>
+    </>
+  );
 };
 
 const FirstComponent = () => {
@@ -22,8 +31,14 @@ const FirstComponent = () => {
 };
 
 const SecondComponent = () => {
+  const queryClient = useQueryClient();
   const count = useAtomValue(multiplyCountAtom);
-  return <div>second component: {count}</div>;
+  console.log('dddd', queryClient.getQueryData(['posts']));
+  return (
+    <>
+      <div>second component: {count}</div>
+    </>
+  );
 };
 
 const ThirdComponent = () => {
@@ -47,7 +62,7 @@ const Account = () => {
       <button onClick={() => setCount((c) => c + 1)}>increase</button>
       <button onClick={() => setSubtractCount(count + 1)}>click</button>
       <button onClick={() => setId((c) => c + 1)}>post id increase</button>
-      <button onClick={() => queryClient.invalidateQueries({ queryKey: ['posts'] })}>refetch</button>
+      <button onClick={() => queryClient.invalidateQueries({ queryKey: ['postss'] })}>refetch</button>
       <Outlet />
     </div>
   );

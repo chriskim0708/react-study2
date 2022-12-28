@@ -12,6 +12,8 @@ import About from './pages/About';
 import Post from './pages/Post';
 import PostSegment from './pages/PostSegment';
 import Account from './pages/Account';
+import InView from './pages/InView';
+import Canvas from './pages/Canvas';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const AtomsDevtools = ({ children }: any) => {
@@ -30,6 +32,8 @@ const router = createBrowserRouter(
         <Route path=":id" element={<PostSegment />}></Route>
       </Route>
       <Route path="account" element={<Account />}></Route>
+      <Route path="inview" element={<InView />}></Route>
+      <Route path="canvas" element={<Canvas />}></Route>
     </Route>
   )
 );

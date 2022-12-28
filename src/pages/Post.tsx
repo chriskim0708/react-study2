@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useEffect } from 'react';
 import { CounterProivder, CounterContext, CounterActionContext } from '../contexts/CounterContext';
 import { Outlet, Link } from 'react-router-dom';
 import styled from '@emotion/styled';
@@ -6,6 +6,7 @@ import { useQuery, useMutation, useQueryClient, useQueries } from '@tanstack/rea
 import axios from 'axios';
 import { usersAtom } from '../store/users';
 import { useAtomValue, useSetAtom } from 'jotai';
+import { rejects } from 'assert';
 
 const FirstChildComponent = () => {
   const { count } = useContext(CounterContext);
@@ -89,6 +90,7 @@ const Post = () => {
   //   },
   // });
   const wait = (timeToDelay: number) => new Promise((resolve) => setTimeout(resolve, timeToDelay));
+  const test = () => new Promise((resolve, reject) => reject({ a: 1 })).catch((error) => error);
   const [users, posts] = useQueries({
     queries: [
       {
@@ -96,6 +98,7 @@ const Post = () => {
         queryFn: async () => {
           return axios.get(`https://jsonplaceholder.typicode.com/users`).then((res) => res.data);
         },
+        staleTime: 60 * 1000 * 60,
         onSuccess: (data: any) => {
           console.log('user success data', data);
           setUsers((users) => users.concat(data));
@@ -103,6 +106,7 @@ const Post = () => {
       },
       {
         queryKey: ['posts'],
+        staleTime: 60 * 1000 * 60,
         queryFn: async () => {
           await wait(10000);
           return axios.get(`https://jsonplaceholder.typicode.com/posts`).then((res) => res.data);
@@ -120,6 +124,19 @@ const Post = () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
       queryClient.invalidateQueries({ queryKey: ['posts'] });
     },
+  });
+
+  useEffect(() => {
+    console.log('effect');
+    async function call() {
+      try {
+        const result = await test();
+        console.log('try result', result);
+      } catch (error) {
+        console.log('catch error', error);
+      }
+    }
+    call();
   });
 
   return (

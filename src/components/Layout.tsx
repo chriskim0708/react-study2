@@ -14,6 +14,8 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         <StyledLink to="about">about</StyledLink>
         <StyledLink to="post">post</StyledLink>
         <StyledLink to="account">account</StyledLink>
+        <StyledLink to="inview">inview</StyledLink>
+        <StyledLink to="canvas">canvas</StyledLink>
       </Header>
       <Content>{children}</Content>
       <Footer>footer</Footer>
