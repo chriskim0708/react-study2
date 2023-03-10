@@ -1,5 +1,14 @@
-import React, { useContext, memo } from 'react';
-import { CounterProivder, CounterContext, CounterActionContext } from '../contexts/CounterContext';
+import React, { useContext, memo } from "react";
+import {
+  CounterProivder,
+  CounterContext,
+  CounterActionContext,
+} from "../contexts/CounterContext";
+import type {
+  IDialogAction,
+  IDialogState,
+  DialogReducerType,
+} from "../components/Dialog";
 
 const FirstChildComponent = () => {
   const { count } = useContext(CounterContext);
@@ -25,7 +34,7 @@ const ThirdComponent = () => {
 };
 
 const Button = () => {
-  console.log('button render');
+  console.log("button render");
   const actions = useContext(CounterActionContext);
   return (
     <>
